@@ -9,6 +9,7 @@ int xValue = 0;
 int yValue = 0;
 String XString, YString = "";
 LiquidCrystal device(12, 11, 5, 4, 3, 2);
+int LEDList[4] = {RED,BLUE,YELLOW,GREEN}; //IMPORTANT!!!!!!
 
 void setup() 
 {
@@ -16,12 +17,12 @@ void setup()
   device.begin(16,2);
 }
 
-void LEDControl()
+void LEDControl(bool toggle[], int size)
 {
-  digitalWrite(RED,);
-  digitalWrite(GREEN,)
-  digitalWrite(YELLOW,HIGH)
-  digitalWrite(BLUE,HIGH);
+  for(int i=0;i<size;i++)
+  {
+    digitalWrite(LEDLIST[i],toggle[i]);
+  }
 }
 
 void controller()
@@ -42,6 +43,7 @@ void writeMessage()
 void loop() 
 {
   controller();
+  delay(200);
 }
 
 
