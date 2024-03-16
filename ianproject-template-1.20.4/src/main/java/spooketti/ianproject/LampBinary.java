@@ -6,7 +6,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.state.property.Properties;
@@ -34,15 +33,10 @@ public class LampBinary
 
    public static void handleChat(SignedMessage message, ServerPlayerEntity playerEntity, MessageType.Parameters messagetype)
    {
-      Text signedMessage = message.unsignedContent();
-      //System.out.println(binaryCode);
-      if(Integer.parseInt(signedMessage.toString()) == binaryCode)
+      String signedMessage = message.getContent().getString();
+      if(Integer.parseInt(signedMessage) == binaryCode)
       {
          playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION,50,1));
-      }
-      else
-      {
-         System.out.println(signedMessage.toString());
       }
    }
 }
