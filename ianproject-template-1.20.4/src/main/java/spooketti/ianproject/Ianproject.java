@@ -3,6 +3,7 @@ package spooketti.ianproject;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
@@ -26,6 +27,10 @@ public class Ianproject implements ModInitializer {
 	public void onInitialize() 
 	{
 		registerItems();
+		ServerMessageEvents.CHAT_MESSAGE.register((message,player,messageType) -> {
+			LampBinary.handleChat(message,player,messageType);
+		});
+		
 	}	
 
 	public static final SpawnZombie SPAWNZOMBIE = new SpawnZombie(new FabricItemSettings().rarity(Rarity.EPIC));
