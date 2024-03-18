@@ -1,4 +1,4 @@
-package spooketti.ianproject;
+package spooketti.ianproject.item;
 
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +8,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import spooketti.ianproject.LampBinary;
 public class SpawnZombie extends Item
 {
     public SpawnZombie(Settings settings)

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "spooketti:breadcrumb"
+        },
+        "C": {
+            "item": "minecraft:chicken"
+        }
+    },
+    "result": {
+        "item": "spooketti:raw_nugget",
+        "count": 1
+    }
+}
