@@ -3,7 +3,8 @@
 	"package": "spooketti.ianproject.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"ZombieDie"
 	],
 	"injectors": {
 		"defaultRequire": 1

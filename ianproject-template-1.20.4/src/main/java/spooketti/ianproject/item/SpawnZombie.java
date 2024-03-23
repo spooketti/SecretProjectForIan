@@ -4,11 +4,13 @@ import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import spooketti.ianproject.LampBinary;
+import spooketti.ianproject.SerialStatus;
 public class SpawnZombie extends Item
 {
     public SpawnZombie(Settings settings)
@@ -16,16 +18,26 @@ public class SpawnZombie extends Item
         super(settings);
     }
 
+    public static ZombieEntity zombie;
+
     public static void zombieInBox(World world, Box greenRoom)
     {
-        for(ZombieEntity zombie : world.getEntitiesByClass(ZombieEntity.class, greenRoom, entity -> true))
+        for(ZombieEntity zom : world.getEntitiesByClass(ZombieEntity.class, greenRoom, entity -> true))
         {
-            zombie.kill();
+            
+            zom.kill();
         }
-        ZombieEntity zombie = new ZombieEntity(world);
+        zombie = new ZombieEntity(world);
         zombie.setPosition(0,0,0);
+        zombie.setCustomName(Text.of("死"));
         world.spawnEntity(zombie);
     }
+
+    public static void deathReset()
+    {
+
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand)
     {
@@ -34,6 +46,7 @@ public class SpawnZombie extends Item
         {
             return TypedActionResult.fail(playerEntity.getStackInHand(hand));
         }
+        SerialStatus.greenComplete = true;
         zombieInBox(world, greenRoom);
         LampBinary.initBinary(world);
         return TypedActionResult.success(playerEntity.getStackInHand(hand));
