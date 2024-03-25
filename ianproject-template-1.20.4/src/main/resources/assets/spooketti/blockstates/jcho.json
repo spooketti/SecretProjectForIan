@@ -1,7 +1,12 @@
 {
   "variants": {
-    "": {
-      "model": "spooketti:block/jcho"
-    }
+    "charged=false,color=0": {"model": "spooketti:block/jcho"},
+    "charged=false,color=1": {"model": "spooketti:block/jcho"},
+    "charged=false,color=2": {"model": "spooketti:block/jcho"},
+    "charged=false,color=3": {"model": "spooketti:block/jcho"},
+    "charged=true,color=0": {"model": "spooketti:block/jegg"},
+    "charged=true,color=1": {"model": "spooketti:block/jegg"},
+    "charged=true,color=2": {"model": "spooketti:block/jegg"},
+    "charged=true,color=3": {"model": "spooketti:block/jegg"}
   }
 }

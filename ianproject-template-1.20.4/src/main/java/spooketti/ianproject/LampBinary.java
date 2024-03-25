@@ -27,7 +27,7 @@ public class LampBinary
       }
       for(int i=0;i<8;i++)
       {
-         world.setBlockState(new BlockPos(i,0,0), Blocks.COPPER_BULB.getDefaultState().with(Properties.LIT,decimalBool[binaryString.charAt(i) - '0']));
+         world.setBlockState(new BlockPos(11,-59,31-i), Blocks.COPPER_BULB.getDefaultState().with(Properties.LIT,decimalBool[binaryString.charAt(i) - '0']));
       }
    }
 

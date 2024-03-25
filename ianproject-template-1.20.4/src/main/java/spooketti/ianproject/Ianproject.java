@@ -19,6 +19,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import spooketti.ianproject.block.JCho;
+import spooketti.ianproject.item.ActivateSimon;
 import spooketti.ianproject.item.SpawnZombie;
 
 import org.slf4j.Logger;
@@ -42,10 +43,11 @@ public class Ianproject implements ModInitializer {
 		
 	}	
 
-	public static final JCho JCHO = new JCho(FabricBlockSettings.create().strength(4.0f));
+	public static final JCho JCHO = new JCho(FabricBlockSettings.create().strength(4.0f).luminance(state -> state.get(JCho.charged) ? 15: 0));
 	public static final BlockItem JCHO_ITEM = new BlockItem(JCHO,new FabricItemSettings());
 
 	public static final SpawnZombie SPAWNZOMBIE = new SpawnZombie(new FabricItemSettings().rarity(Rarity.EPIC));
+	public static final ActivateSimon SIMON = new ActivateSimon(new FabricItemSettings().rarity(Rarity.EPIC));
 	public static final Item BREADCRUMB = new Item(new FabricItemSettings());
 	public static final FoodComponent RAW_NUGGET_COMPONENT = new FoodComponent.Builder().hunger(1).
 	saturationModifier(.25f).statusEffect(new StatusEffectInstance(StatusEffects.INSTANT_DAMAGE),1).meat().build();
@@ -78,7 +80,9 @@ public class Ianproject implements ModInitializer {
 		registerCreative(ItemGroups.FOOD_AND_DRINK,Items.CHICKEN,MC_NUGGET);
 		Registry.register(Registries.BLOCK, new Identifier("spooketti", "jcho"), JCHO);
 		Registry.register(Registries.ITEM, new Identifier("spooketti", "jcho"), JCHO_ITEM);
-		registerCreative(ItemGroups.COLORED_BLOCKS, Items.YELLOW_CONCRETE,JCHO_ITEM);
+		registerCreative(ItemGroups.BUILDING_BLOCKS, Items.OAK_PLANKS,JCHO_ITEM);
+		Registry.register(Registries.ITEM, new Identifier("spooketti","simon"), SIMON);
+		registerCreative(ItemGroups.TOOLS,Items.DIAMOND_PICKAXE,SIMON);
     
     }
 }

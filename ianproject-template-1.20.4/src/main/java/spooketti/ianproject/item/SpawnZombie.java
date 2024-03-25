@@ -24,11 +24,10 @@ public class SpawnZombie extends Item
     {
         for(ZombieEntity zom : world.getEntitiesByClass(ZombieEntity.class, greenRoom, entity -> true))
         {
-            
             zom.kill();
         }
         zombie = new ZombieEntity(world);
-        zombie.setPosition(0,0,0);
+        zombie.setPosition(11.5, -58, -16);
         zombie.setCustomName(Text.of("死"));
         world.spawnEntity(zombie);
     }
@@ -41,7 +40,7 @@ public class SpawnZombie extends Item
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand)
     {
-        Box greenRoom = new Box(0,0,0,5,5,5);
+        Box greenRoom = new Box(8,-60,-19,14,-52,-5);
         if(!greenRoom.contains(playerEntity.getPos().x,playerEntity.getPos().y,playerEntity.getPos().z))
         {
             return TypedActionResult.fail(playerEntity.getStackInHand(hand));
