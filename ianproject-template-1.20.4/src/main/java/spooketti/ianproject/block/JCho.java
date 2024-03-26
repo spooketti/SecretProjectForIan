@@ -29,11 +29,14 @@ public class JCho extends Block {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
             BlockHitResult hit) {
+        if(Simon.reading || state.get(charged))
+        {
+            return ActionResult.CONSUME;
+        }
         if (!world.isClient) {
-            Simon.writeSimon(Simon.SimonChoice[(int)state.get(colorType)]);
+            Simon.writeSimon(Simon.SimonChoice[(int)state.get(colorType)],pos);
             world.scheduleBlockTick(pos,this,10);
             world.setBlockState(pos, state.with(charged,true));
-
         return ActionResult.SUCCESS;
     }
     return ActionResult.FAIL;
@@ -42,7 +45,22 @@ public class JCho extends Block {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
     {
+        System.out.println(Simon.systemPattern);
         world.setBlockState(pos, state.with(charged,false));
+        if(Simon.reading)
+        {
+            Simon.sysPos++;
+            if(Simon.sysPos >= Simon.systemPattern.length()-1)
+            {
+                Simon.sysPos = -1;
+                Simon.reading = false;
+                System.out.println("finished");
+                return;
+            }
+            BlockPos nextPos = new BlockPos(-10,-57,Simon.choiceMap.get(Simon.systemPattern.charAt(Simon.sysPos)));
+            world.setBlockState(nextPos, state.with(charged,true)); 
+            world.scheduleBlockTick(nextPos,this,30);
+        }
     }
 
     @Override

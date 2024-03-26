@@ -6,18 +6,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import spooketti.ianproject.block.JCho;
 
-public class Simon 
+public class Simon
 {
- private static String systemPattern = "";
+ public static String systemPattern = "";
  private static String currentPattern = "";
  private static World world;
 
  public static char[] SimonChoice = {'R','Y','G','B'};
- private static HashMap<Character, Integer> choiceMap = new HashMap<>();
+ public static HashMap<Character, Integer> choiceMap = new HashMap<>();
  private static final BlockPos RedPos = new BlockPos(-10,-57,7);
     private static final BlockPos YellowPos = new BlockPos(-10,-57,5);
     private static final BlockPos GreenPos = new BlockPos(-10,-57,3);
     private static final BlockPos BluePos = new BlockPos(-10,-57,1);
+   private static final BlockPos[] posArr = {RedPos,YellowPos,GreenPos,BluePos};
+public static int sysPos = 0;
+public static boolean reading = false;
 
  public static void resetSimon()
  {
@@ -35,10 +38,10 @@ public class Simon
    choiceMap.put('G',3);
    choiceMap.put('B',1);
    world = wrld;
-   world.setBlockState(new BlockPos(-10,-57,7), world.getBlockState(new BlockPos(-10,-57,7)).with(JCho.colorType,0));
-   world.setBlockState(new BlockPos(-10,-57,5), world.getBlockState(new BlockPos(-10,-57,5)).with(JCho.colorType,1));
-   world.setBlockState(new BlockPos(-10,-57,3), world.getBlockState(new BlockPos(-10,-57,3)).with(JCho.colorType,2));
-   world.setBlockState(new BlockPos(-10,-57,1), world.getBlockState(new BlockPos(-10,-57,1)).with(JCho.colorType,3));
+   for(int i=0;i<4;i++)
+   {
+      world.setBlockState(posArr[i], world.getBlockState(posArr[i]).with(JCho.colorType,i).with(JCho.charged,false));
+   }
    beginSimon();
  }
 
@@ -51,35 +54,28 @@ public class Simon
 
  private static void readSimon()
  {
+   reading = true;
+   sysPos = 0;
    currentPattern = "";
-    systemPattern += SimonChoice[(int)Math.floor(Math.random()*SimonChoice.length)];
-    for(int i=0;i<systemPattern.length();i++)
-    {
-      char choice = systemPattern.charAt(i);
-      BlockPos pos = new BlockPos(-10,-57,choiceMap.get(choice));
-      world.setBlockState(pos, world.getBlockState(pos).with(JCho.charged, true));
-      world.scheduleBlockTick(pos, world.getBlockState(pos).with(JCho.charged,true).getBlock(), 30);
-    }
+   systemPattern += SimonChoice[(int)Math.floor(Math.random()*SimonChoice.length)];
+   BlockPos pos = new BlockPos(-10,-57,choiceMap.get(systemPattern.charAt(0)));
+   world.setBlockState(pos, world.getBlockState(pos).with(JCho.charged, true));
+   world.scheduleBlockTick(pos,world.getBlockState(pos).getBlock(),30);
  }
 
- public static void writeSimon(char choice)
+ public static void writeSimon(char choice,BlockPos pos)
  {
     currentPattern += choice;
-    System.out.println(systemPattern);
-    if(systemPattern.charAt(currentPattern.length()-1)!=choice)
+    sysPos++;
+    if(currentPattern.equals(systemPattern))
     {
-        initWorld(world);
-        return;
-    }
-    if(systemPattern.equals(currentPattern))
-    {
-      if(currentPattern.length() >= 5)
-      {
-          SerialStatus.redComplete = true;
-          return;
-      }
+      world.setBlockState(pos, world.getBlockState(pos).with(JCho.charged,false));
       readSimon();
       return;
+    }
+    if(choice != systemPattern.charAt(sysPos))
+    {
+      initWorld(world);
     }
  }
 
